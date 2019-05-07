@@ -1,0 +1,59 @@
+using System;
+
+//namespace Inheritance
+
+  public class post
+{
+ private static int currentPostId;
+
+ protected int Id{get; set;}
+ protected string Title{get; set;}
+ protected string SendByUsername{get; set;}
+ protected bool IsPublic{get; set;}
+ 
+public post()
+{
+ Id=0;
+ Title="FbPost";
+ SendByUsername="vinay";
+ IsPublic=true;
+}
+
+public post(string Title,string SendByUsername,bool IsPublic)
+{
+  //this.Id=GetId();
+    this.Id=1;
+  this.Title=Title;
+  this.SendByUsername=SendByUsername;
+  this.IsPublic=IsPublic;
+}
+
+/*public int GetId()
+{
+  ++currentPostId;
+}*/
+
+public void Update(string Title,bool IsPublic)
+{
+ this.Title=Title;
+ this.IsPublic=IsPublic;
+}
+
+public void ToPrint()
+{
+ Console.WriteLine("Id is {0} and title is {1} whith username {2}and it {3}",Id,Title,SendByUsername,IsPublic);
+}
+
+}
+
+public class program
+{
+public static void Main()
+{
+ Console.WriteLine("Hello World");
+
+ post vinraikar= new post();
+ vinraikar.ToPrint();
+
+}
+}
