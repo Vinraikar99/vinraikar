@@ -1,0 +1,78 @@
+using System;
+
+public class Post
+{
+
+private static int currentsetId;
+
+protected int Id{get;set;}
+protected string Title{get; set;}
+protected string SendByUserName{get; set;}
+protected bool IsPublic{get; set;}
+
+
+public Post()
+{
+Id=0;
+Title="FbPost";
+SendByUserName="Vinay";
+IsPublic=true;
+}
+
+public Post(string Title ,string SendByUserName,bool IsPublic)
+{
+this.Id= 1;
+this.SendByUserName=SendByUserName;
+this.IsPublic=IsPublic;
+}
+
+/*protected int GetId()
+{
+++currentsetId;
+}*/
+
+
+public void ToPrint()
+{
+ Console.WriteLine("Id is {0} and title is {1} with username {2} and its {3}",Id,Title,SendByUserName,IsPublic);
+}
+}
+
+public class ImagePost:Post
+{
+protected string Image{get; set;}
+
+public ImagePost()
+{
+Id= 2;
+SendByUserName="VinRaikar";
+IsPublic=false;
+Image="http:jakjakak.com";
+}
+
+public ImagePost(string Title ,string SendByUserName,bool IsPublic, string Image)
+{
+this.Id= 3;
+this.SendByUserName=SendByUserName;
+this.IsPublic=IsPublic;
+this.Image=Image;
+}
+
+public void ToPrint()
+{
+ Console.WriteLine("Id is {0} and title is {1} with username {2} and its {3} can access image {4}",Id,Title,SendByUserName,IsPublic,Image);
+}
+
+}
+
+class program
+{
+public static void Main()
+{
+Console.WriteLine("hello");
+Post vinay = new Post();
+vinay.ToPrint();
+ImagePost Vin = new ImagePost();
+Vin.ToPrint();
+}
+}
