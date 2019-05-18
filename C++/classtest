@@ -1,0 +1,51 @@
+#include <iostream>
+
+using namespace std;
+
+class Interval  //class creation 
+{
+public:
+	long GetTime()
+	{
+		return 60 * minutes + seconds;      // 60 * 2 +5 =125
+	}
+
+	void SetTime(long value)                 //void _ZN8Interval7SetTimeEl(Interval* this, long value)
+	{
+		minutes = value / 60;                //this->minutes = value / 60    125 / 60 = 2
+		seconds = value % 60;               //this->seconds = value % 60    125 % 60 = 5
+	}
+
+	void Print() 
+	{
+		if(seconds < 10)
+		        //  2 : 0 5
+			cout << minutes << ":0" << seconds << endl;
+		else
+	            // greater than 10 then code will be here
+			cout << minutes << ":" << seconds << endl;
+	}
+private:
+	long minutes;   
+	long seconds;
+};                                                                                                // duration is replaced by jack
+                             // object is called here (interval duration-> where it become ineterval jack and take jack's GetTime)
+float Speed(float distance, Interval duration)   //global function
+{
+	return 3.6 * distance / duration.GetTime();
+}
+
+int main(void)
+{
+	Interval jack;  //object creation
+	jack.SetTime(125); //_ZN8Interval7SetTimeEl(&jack, 125)        //object.method
+	Interval john;   //new object creation
+	john.SetTime(200); //_ZN8Interval7SetTimeEl(&john, 200)
+	cout << "Jack's Interval = ";
+	jack.Print();
+	cout << "Jack's speed = " << Speed(500, jack) << endl;
+	cout << "John's Interval = ";
+	john.Print();
+	                             // we can call method in cout 
+	cout << "John's speed = " << Speed(500, john) << endl;
+}
