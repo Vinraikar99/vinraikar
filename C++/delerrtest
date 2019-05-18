@@ -1,0 +1,59 @@
+#include <iostream>
+
+using namespace std;
+
+class Interval     //class created
+{
+public:             // visible to everyone
+
+	explicit Interval(long time=0)    //explicit means should be done by user but here it means that we cant pass value in this manner [=100] we have to pass in [(100)] because is proper manner and its saves one step of conversion of "=" to "()" and also any pass =125,130 whis is not possible in case of inciplit so using explicit it will not possible only one have to passedn (100).
+	{
+		minutes = time / 60;
+		seconds = time % 60;
+		cout << "Interval object activated" << endl;     //endl - new line
+	}
+	
+	long GetTime() const
+	{
+		return 60 * minutes + seconds;
+	}
+
+	void SetTime(long value) 
+	{
+		minutes = value / 60;
+		seconds = value % 60;
+	}
+
+	void Print() const
+	{
+		if(seconds < 10)
+			cout << minutes << ":0" << seconds << endl;
+		else
+			cout << minutes << ":" << seconds << endl;
+	}
+
+	~Interval()
+	{
+		cout << "Interval object deactivated" << endl;
+	}
+
+private:
+	long minutes;
+	long seconds;
+};
+
+int main(void)
+{
+	int n;
+	cout << "Number of Intervals: ";
+	cin >> n;
+      // in C++ to create new object in heap then we have use pointer 
+      // store is object pointer which is stored in heap in store their is an array of object in store due to which constructor is called // store[1 2 3 4]
+	Interval* store = new Interval[n];  
+	for(int i = 0; i < n; ++i)
+	{    
+		store[i].SetTime(100 + 50 * i);
+		store[i].Print();
+	}
+	delete[] store;  //delete the array object from store 
+}
