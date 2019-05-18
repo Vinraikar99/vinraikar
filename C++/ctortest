@@ -51,7 +51,7 @@ int main(void)
 {
 	Interval jack; //activation using default constructor
 	jack.SetTime(125); //then intilizing using method
-	Interval john = 200; //activation using conversion constructor 
+	Interval john = 200; //activation using conversion constructor   // convert =200 to (200)
 	cout << "Jack's Interval = ";
 	jack.Print();
 	cout << "John's Interval = ";
