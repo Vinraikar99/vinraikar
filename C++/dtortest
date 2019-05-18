@@ -5,7 +5,7 @@ using namespace std;
 class Interval
 {
 public:
-	//universal constructor s=125, m=0 or s=125 , m=25
+	//universal constructor s=125, m=0 or this is not possible (s=125 , m=25) (s=0 , m=125)
 	Interval(long s=0, long m=0)
 	{
 		seconds = 60 * m + s; //initialization      // seconds = 60 * 0 + 250 = 250
