@@ -1,0 +1,25 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * Created by amar panchal
+ */
+import java.lang.ArrayIndexOutOfBoundsException;
+import java.io.*;
+public class ThrowsaExample 
+{
+
+public static void main(String args[])throws 
+{
+DataInputStream dis =new DataInputStream(System.in);
+
+    String s=dis.readLine();
+    System.out.println(s);
+
+
+}
+}
