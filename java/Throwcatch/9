@@ -1,0 +1,41 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author AMAR PANCHAL
+ */
+    class TestExceptionPropagation1{  
+      void m(){  
+          System.out.println("m called");
+        int data=50/0; //unchecked get throwen in chain 
+      }  
+      void n(){ 
+          System.out.println("n called");
+        m();  
+      }  
+      void p(){  
+          System.out.println("p called");
+       //try{  
+        n();  
+      // }
+      // catch(Exception e)
+     // {System.out.println("exception handled in p");}  
+      }  
+      public static void main(String args[]){  
+       System.out.println("main called");
+       TestExceptionPropagation1 obj=new TestExceptionPropagation1();  
+       try{
+       obj.p();
+       }
+       catch(Exception e)
+       {
+        System.out.println("Exception handled in main");   
+       }
+       System.out.println("normal flow...");  
+      }  
+    }  
+
