@@ -1,0 +1,28 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author AMAR PANCHAL
+ */
+    class TestFinallyBlock
+    {  
+      public static void main(String args[]){  
+      try{
+       int i=10;   
+       System.out.println("going in try");
+       System.exit(1);
+       int data=i/0;  
+       System.out.println(data);  
+      }  
+           
+      finally{
+          System.out.println("finally block is always executed"); 
+      }  
+      System.out.println("rest of the code...");  
+      }  
+    }  
+
