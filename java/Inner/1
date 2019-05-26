@@ -1,0 +1,45 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * Created by amar panchal
+ */
+public class MethodBasedInnerClass {
+   // instance method of the outer class 
+   void my_Method() 
+   {
+      int num = 100;
+
+      // method-local inner class
+      class MethodInner 
+      {
+         public void print() 
+         {
+            System.out.println("This is method inner class "+num);	   
+         }   
+      } // end of inner class
+	   
+      // Accessing the inner class
+      MethodInner inner = new MethodInner();
+      inner.print();
+   }
+   
+   public static void main(String args[]) {
+      MethodBasedInnerClass outer = new MethodBasedInnerClass();
+      outer.my_Method();	   	   
+   }
+}
+
+
+
+
+
+
+
+
+
+
