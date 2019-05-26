@@ -1,0 +1,43 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * Created by amar panchal
+ */
+import java.util.*;
+class ZeroException extends Exception
+{
+    ZeroException(String s)
+    {
+        super(s);
+    }
+}
+public class PaperQ103c 
+{
+
+public static void main(String args[])
+{
+Scanner in =new Scanner(System.in);
+System.out.println("Enter a,b,c,d");
+try{
+    int a=in.nextInt();
+    int b=in.nextInt();
+    int c=in.nextInt();
+    int d=in.nextInt();
+    if((b*d)==0)
+        throw new ZeroException("(b*d)==0");
+    
+    else 
+     System.out.println("Answer is "+(float)((a*d)+(b*c))/(b*d));   
+    
+}
+catch(ZeroException e)
+{
+ System.out.println("Exception caught:"+e);
+}
+}
+}
