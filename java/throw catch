@@ -1,0 +1,60 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author AMAR PANCHAL
+ */
+package Exception_Handling;
+    public class trycatch1{  
+      public static void main(String args[]) {  
+          try{ 
+              System.out.println("Enter in try");
+              int a[]={111,22,33};
+               int data=1;
+               if(10/data!=0 && a[1]==22) 
+               {
+                  System.out.println("data is:"+data);
+               }  
+                
+              System.out.println("Exit from try");
+             }
+         
+          catch(Exception  c)
+          {
+            System.out.println("Finally some error:"+c);
+            //e.printStackTrace();
+          } 
+          
+          catch(ArrayIndexOutOfBoundsException a)
+          {
+            System.out.println("Wrong index given:"+a);
+            //e.printStackTrace();
+          } 
+          catch(ArithmeticException  b)
+          {
+            System.out.println("Divided by zero:"+b);
+            //e.printStackTrace();
+          } 
+          
+          
+          System.out.println("Main still continues");
+      }
+    }
+          /*int data=50/0;//may throw exception  
+          ArithmeticException
+          System.out.println("rest of the code...");  */
+   
+
+
+
+
+
+
+
+/*try{  
+      int data=50/0;  
+   }catch(ArithmeticException e){System.out.println(e);} */
