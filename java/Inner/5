@@ -1,0 +1,40 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author AMAR PANCHAL
+ */
+package InnerClasses;
+    public class localInner1
+    {  
+     private int data=30;
+  //instance variable  
+      static class Local
+        {  
+            void msg()
+            {
+            	System.out.println("data accessed:");  
+            }
+        }  
+     void display()
+     {  
+       
+        Local l=new Local();  
+        l.msg();  
+        
+     }  
+     public static void main(String args[]){  
+      localInner1.Local obj=new localInner1.Local();//only local created
+      obj.msg();//partial implementation
+      localInner1 l=new localInner1();//complete implementation
+      l.display();//internally creates local and uses it
+      
+      
+      
+      
+     }  
+    }  
