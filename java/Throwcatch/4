@@ -1,0 +1,32 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author AMAR PANCHAL
+ */
+    import java.io.*;  
+    class M{  
+     void method()throws IOException{  
+      //CODE
+        throw new IOException("my message---->device error");  
+      int i=10/0;
+  
+     }  
+    }  
+    public class Testthrows2{  
+       public static void main(String args[]){  
+        try
+        {  
+         M m=new M();  
+         m.method();  
+        }
+        catch(Exception e)
+        {System.out.println("exception handled:"+e.getMessage());}     
+      
+        System.out.println("normal flow...");  
+      }  
+    }  
