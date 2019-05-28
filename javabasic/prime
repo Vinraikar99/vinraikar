@@ -1,0 +1,30 @@
+package vin;
+import java.util.*;
+public class prime {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner in=new Scanner(System.in);
+		System.out.println("enter an number ");
+		int n=in.nextInt();
+		if(n==1 || n==2)
+		{
+			System.out.println("its a prime");
+		}
+		for(int i=2;i<n;i++)
+		{
+			if(n/i!=0)
+			{
+				System.out.println("its a prime no");
+				
+			}
+			else
+			{
+				System.out.println("its not a prime no");
+			}
+		}
+		
+
+	}
+
+}
