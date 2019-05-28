@@ -1,0 +1,33 @@
+package vin;
+import java.util.*;
+ interface  length
+ {
+	 void Print();
+ }
+ 
+ class Measurement implements length
+ {
+	private int distance; 
+	
+	Measurement(int distance)
+	{
+		this.distance=distance;
+	}
+	
+	 public void Print()
+	 {
+	   System.out.println("feet: "+(distance/12)+","+"inches: "+(distance%12));
+	 }
+}
+ 
+public class Distance {
+	
+	
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+    Measurement obj = new Measurement(400);
+    obj.Print();
+	}
+
+}
