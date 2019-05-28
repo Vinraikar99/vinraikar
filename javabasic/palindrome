@@ -1,0 +1,32 @@
+package vin;
+import java.util.*;
+
+public class palindrome {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+        int sum=0;
+		Scanner in = new Scanner(System.in);
+		System.out.println("Enter any Number:");
+		int num=in.nextInt();
+		int xyz=num;
+		while(num!=0)
+		{
+			int rem=num%10;
+		   sum=sum*10+rem;
+			num=num/10;
+		}
+		
+		System.out.println("reverse is "+sum);
+		//System.out.println(xyz);
+		if(xyz==sum)
+		{
+			System.out.println("it is palindrome");
+		}
+		else
+		{
+			System.out.println("it is not palindrome");
+		}
+	}
+
+}
