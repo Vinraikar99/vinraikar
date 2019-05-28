@@ -1,0 +1,122 @@
+package vin;
+import java.util.*;
+
+ class PatientDetails
+{
+	protected int patientId;
+	protected String patientName;
+	protected int bedType; 
+	protected int noOfDays;
+
+	static double amount;
+	static int id=1000;
+	PatientDetails(String patientName, int bedType,int noOfDays)
+	{
+		this.patientId=++id;
+		this.patientName=patientName;
+		this.bedType=bedType;
+		this.noOfDays=noOfDays;
+	}
+	
+	public double getBillAmount()
+	{
+		
+		return  amount= noOfDays*getPricePerDay(bedType);
+		
+	}
+	
+	public void display()
+	{
+		
+		System.out.println("Patient Id: "+patientId+"\n"+"Patient Name: "+patientName+"\n"+"Bed Type: "+bedType+"\n"+"No of Days adimitted: "+noOfDays+"\n"+"Total BILL: "+getBillAmount());
+	}
+	public double getPricePerDay(int bedType)
+	{
+		
+		if(bedType==1)
+		{
+		
+			double price=500;
+			return price;
+		}
+		
+		else if(bedType==2)
+		{
+			double price=350;
+			return price;
+		}
+		else if(bedType==3)
+		{
+			double price=200;
+			return price;
+		}
+		else
+			return 0;
+		
+		
+	}
+}
+
+ class inHousepatient extends PatientDetails
+ {
+	 private Double Discount;
+	 
+	 inHousepatient(String patientName, int bedType,int noOfDays)
+	 {
+		 super(patientName,bedType,noOfDays);
+		
+	 }
+	 
+	 public void set(double amount)
+	 {
+		 if(amount > 2000)
+		 {
+			 double r= (amount-((double)5/100)*amount);
+			 Discount= r;
+			 System.out.println("r is "+r);
+		 }
+		 else
+		 {
+			this.Discount =amount;
+		 }
+	 }
+	 
+	 
+	 public void display()
+	 {
+		 set(amount);
+		 System.out.println("Patient Id: "+patientId+"\n"+"Patient Name: "+patientName+"\n"+"Bed Type: "+bedType+"\n"+"No of Days adimitted: "+noOfDays+"\n"+"Total BILL: "+Discount);
+	 }
+	 
+//	public double getBillAmount()
+//		{
+//			
+//			return  amount= noOfDays*getPricePerDay(bedType);
+//		}
+	 
+	 
+	
+ }
+ 
+public class Patient {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner s=new Scanner(System.in);
+		System.out.println("Enter the details of Patient: ");
+		System.out.println("Bed Type available are 1,2,3 ");
+		String patientName=s.next();
+		int bedType=s.nextInt();
+		int noOfDays=s.nextInt();
+		
+		
+		PatientDetails op=new PatientDetails(patientName,bedType,noOfDays);
+		double print=op.getBillAmount();
+		System.out.println("bill of patient is "+print);
+		op.display();
+	    inHousepatient obj=new inHousepatient(patientName,bedType,noOfDays);
+		obj.display();
+
+	}
+
+}
