@@ -1,0 +1,58 @@
+package vin;
+import java.util.*;
+
+abstract class BankLoan
+{
+	private double principle;
+	private float period;
+	
+	public double GetPrinciple()
+	{
+		return principle;
+	}
+	
+	public void SetPrinciple(double principle)
+	{
+		this.principle=principle;
+	}
+	
+	public float GetPeriod()
+	{
+		return period;
+	}
+	
+	public void SetPeriod(float period)
+	{
+		this.period=period;
+	}
+	
+	abstract float Getrate();
+	
+	public double GetEMI(float rate)
+	{
+		double emi;
+		return emi=principle*(1+rate*((double)period/100))/(12*period);
+	}
+	
+}
+
+class PersonLoan extends BankLoan
+{
+	public float Getrate()
+	{
+		if(principle=500000)
+		{
+			
+		}
+	}
+}
+
+public class Loan {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+
+	}
+
+}
