@@ -1,0 +1,162 @@
+package vin;
+import java.util.*;
+
+abstract class BankLoan
+{
+	protected double principle;
+	protected float period;
+	protected float rate;
+	
+	BankLoan(double principle,float period)
+	{
+		this.principle=principle;
+		this.period=period;
+	}
+	
+//	public double GetPrinciple()
+//	{
+//		return principle;
+//	}
+//	
+//	public void SetPrinciple(double principle)    
+//	{
+//		this.principle=principle;
+//	}
+//	
+//	public float GetPeriod()
+//	{
+//		return period;
+//	}
+//	
+//	public void SetPeriod(float period)
+//	{
+//		this.period=period;
+//	}
+//	
+	abstract float Getrate(double principle);
+	
+	public double GetEMI()
+	{
+		double emi;
+		return emi=principle*(1+rate*((double)period/100))/(12*period);
+	}
+	
+}
+
+class PersonalLoan extends BankLoan
+{
+	//protected float rate;
+	
+	PersonalLoan(double principle,float period)
+	{
+		super(principle,period);
+		
+	}
+	
+	public void Setrate()
+	{
+	  this.rate=Getrate(principle);
+	  System.out.println("rate: "+rate);
+	}
+	
+	public float Getrate(double principle)
+	{
+//	  if(principle <= 500000)
+//	  {
+//		  System.out.println("500000 activated");
+//		  return rate=((float)15/100);
+//	  }
+//	  else if(principle >500000)
+//	  {
+//		  System.out.println("600000 activated");
+//		  return rate=((float)16/100);
+//		    
+//	  }
+//	  
+//	  else
+//	 {
+//	  return rate=1;
+//	 }  
+	  		
+	  return principle <= 500000?((float)15/100):((float)16/100);
+    }
+	
+//	public double GetEMI()
+//	{
+//		Setrate();
+//		double emi;
+//		return emi=principle*(1+rate*((double)period/100))/(12*period);
+//	}
+	
+	public void display()
+	{
+		System.out.println("EMI available: "+GetEMI());
+	}
+	
+}
+
+class HomeLoan extends BankLoan
+{
+	HomeLoan(double principle,float period)
+	{
+		super(principle,period);
+	}
+	
+	public void Setrate()
+	{
+	  this.rate=Getrate(principle);
+	  System.out.println("rate: "+rate);
+	}
+	
+	public float Getrate(double principle)
+	{
+//	  if(principle <=0 2000000)
+//	  {
+//		  System.out.println("500000 activated");
+//		  return rate=((float)10/100);
+//	  }
+//	  else if(principle > 2000000)
+//	  {
+//		  System.out.println("600000 activated");
+//		  return rate=((float)11/100);
+//		    
+//	  }
+//	  else
+//	  {
+//		  return rate=1;
+//	  }  
+	  
+	  return principle <= 2000000?((float)10/100):((float)11/100);
+    }
+     
+	//override is done here by downcasting
+//	public double GetEMI()
+//	{
+//		Setrate();
+//		double emi;
+//		return emi=principle*(1+rate*((double)period/100))/(12*period);
+//	}
+	
+	public void display()
+	{
+		System.out.println("EMI available: "+GetEMI());
+	}
+}
+
+
+
+public class Loan {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		PersonalLoan obj=new PersonalLoan(600000,3);
+		obj.Setrate();
+		obj.display();
+		HomeLoan obj1 = new HomeLoan(2500000,9);
+		obj1.Setrate();
+		obj1.display();
+		
+
+	}
+
+}
