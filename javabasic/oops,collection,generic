@@ -1,0 +1,205 @@
+package vin;
+import java.util.*;
+
+public class Item {
+	
+	
+	static int Id;
+	double CostPerUnit;
+	double Qty;
+
+	
+	public Item(double CostPerUnit,double Qty)
+	{
+		this.CostPerUnit=CostPerUnit;
+		this.Qty=Qty;
+		Id=++Id;
+	}
+	
+	public static int GetId()
+	{
+		return Id;
+	}
+	
+	public double SellingPrice()
+	{
+		return CostPerUnit*Qty;
+	}
+	
+	
+	
+}
+
+
+
+
+
+
+
+
+//new class--------------------------------------------------------------------
+
+package vin;
+import java.util.*;
+public class UsedItem extends Item
+{
+  double DiscountPercentage;	
+	
+  
+  UsedItem(double CostPerUnit,double Qty,double DiscountPercentage)
+  {
+	  super(CostPerUnit,Qty);
+	  this.DiscountPercentage=DiscountPercentage;
+  }
+  
+  
+  public double SellingPrice()
+  {
+	  return Qty*CostPerUnit-DiscountPercentage;
+	  
+  }
+  
+
+
+
+}
+
+
+newclass---------------------------------------------------------------------------------------
+
+package vin;
+import java.util.*;
+public class ShoppingCart 
+{
+
+	ArrayList<Item> ItemList=new ArrayList<Item>();
+	ArrayList<UsedItem> UsedItemList=new ArrayList<UsedItem>();
+	
+	public void addItem(Item i)
+	{
+		ItemList.add(i);
+		System.out.println("Item Added Successfully!!!");
+
+		
+	}
+	
+	public void addUsedItem(UsedItem i)
+	{
+		UsedItemList.add(i);
+		System.out.println("Item Added Successfully!!!");
+	}
+	
+	public void DeleteItem(Item i)
+	{
+		ItemList.remove(i);
+	}
+	
+	public void DeleteUsedItem(Item i)
+	{
+		UsedItemList.remove(i);
+	}
+	
+	public double GetTotalCartPrice()
+	{
+		double Price=0;
+		for(Item i:ItemList)
+		{
+			Price=Price+i.SellingPrice();
+			
+		}
+		return Price;
+		
+	}
+	
+	public double GetTotalUsedCartPrice()
+	{
+		double Price=0;
+		for(UsedItem i:UsedItemList)
+		{
+			Price=Price+i.SellingPrice();
+			
+		}
+		if(Price>500000)
+		{
+			Price-=Price*0.05;
+			
+		}
+		else if(Price>1000000) 
+		{
+			Price-=Price*0.10;
+		}
+		return Price;
+		
+		
+	}
+	
+	public double TotalUsedItem()
+	{
+		double count=0;
+		for(UsedItem i:UsedItemList)
+		{
+			count++;
+			
+		}
+		return count;
+		
+	}
+	public double TotalItem()
+	{
+		double count=0;
+		for(Item i:ItemList)
+		{
+			count++;
+			
+		}
+		return count;
+		
+	}
+
+}
+
+
+newclass--------------------------------------------------------------------------------------------------------------
+
+package vin;
+
+public class ItemTest {
+	
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ShoppingCart sc=new ShoppingCart();
+		
+		UsedItem cloths=new UsedItem(4000,4,5);
+		UsedItem bike=new UsedItem(40000,4,5);
+		UsedItem motor=new UsedItem(30000,3,5);
+		UsedItem machines=new UsedItem(80000,7,5);
+		
+		
+		Item cloths1=new Item(4000,4);
+		Item bike1=new Item(40000,4);
+		Item motor1=new Item(30000,3);
+		Item machines1=new Item(80000,7);
+		
+		sc.addItem(cloths1) ;
+		sc.addItem(bike1) ;
+		sc.addItem(motor1) ;
+		sc.addItem(machines1) ;
+	
+		sc.addUsedItem(cloths);
+		sc.addUsedItem(bike);
+		sc.addUsedItem(motor);
+		sc.addUsedItem(machines);
+		
+		System.out.printf("The calculated price of all the items are -->%f\n",sc.GetTotalUsedCartPrice());
+		System.out.printf("The calculated price of all the items are -->%f\n",sc.GetTotalCartPrice());
+		System.out.printf("The calculated price of all the items are -->%d",(int)sc.TotalUsedItem());
+		
+		System.out.printf("The deleted item with"+ Item.GetId() +"is-->");
+		
+	}
+
+}
+
+
+
