@@ -1,0 +1,32 @@
+package vin;
+import java.sql.*;
+import java.util.*;
+public class Connetion {
+
+	public static void main(String[] args)throws Exception {
+		// TODO Auto-generated method stub
+		
+		Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+		
+		Class.forName("com.mysql.jdbc.Driver");
+		
+		connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/vin", "root", "root");
+		
+		statement = connection.createStatement();
+		
+		resultSet = statement.executeQuery("SELECT * FROM Student");
+		
+		System.out.println("Ename\tRollno\tpointer");
+        System.out.println("==\t================\t===\t=======");
+		
+        while(resultSet.next()) {
+            System.out.println( 
+                    resultSet.getString("Ename") + "\t" + 
+                    resultSet.getInt("Rollno") + "\t" +
+                    resultSet.getFloat("pointer"));
+        }
+	}
+}
