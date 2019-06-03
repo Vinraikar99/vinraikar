@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="Servlet1" method="Post">
+Count <input type="text" name="name"><br>
+<br>
+
+<input type="button" value="Accept">
+
+</form>
+</body>
+</html>
+---------------------------------------------------------------------------------------------------------
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class Servlet1
+ */
+@WebServlet("/Servlet1")
+public class Servlet1 extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Servlet1() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.setContentType("text/html");
+		
+		PrintWriter out = response.getWriter(); 
+		String n=request.getParameter("name"); 
+		out.print("Welcome ");
+		 Cookie ck=new Cookie("tur",n);//creating cookie object  
+		 response.addCookie(ck);//adding cookie in the response 
+		 
+		  out.print("<form action='Servlet2'>"); 
+//		  out.print("<input type='text'>");
+		    out.print("<input type='submit' value='go'>");  
+		    out.print("</form>");  
+		          
+		    out.close();  
+		  
+		}    
+
+	}
+  -----------------------------------------------------------------------------------------------------------------
+  import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class Servlet2
+ */
+@WebServlet("/Servlet2")
+public class Servlet2 extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Servlet2() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter(); 
+		String n=request.getParameter("name"); 
+		out.print("Welcome ");
+		Cookie ck[]=request.getCookies();
+		int result=Integer.parseInt(ck[0].getValue());
+		out.print("Read from Cookie: Hello "+(result+10));
+		
+		out.print("<form action='Index.html' method='Post'>");
+		out.print("<input type='submit' value='back'>");
+		out.print("</form>");
+		
+		out.close(); 
+		
+	}
+
+}
