@@ -75,3 +75,38 @@ class Main
 		obj1.m2(); 
 	} 
 } 
+
+---------------------------------------------------------------------------------------------------------------------
+package vinRaikar;
+
+class Animal
+	{
+	
+	public void print() {
+		System.out.println("hi animal");
+	}
+	
+	}
+
+class Dog extends Animal{
+	
+	public void print11()
+	{
+		System.out.println("hi dog");
+	}
+}
+public class overrRideExample {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		Animal np=new Animal();
+		np.print();
+		Dog lo = new Dog();
+		lo.print();
+		//Animal li = new Dog();
+		//li.print();
+		((Dog)np).print();
+	}
+
+}
