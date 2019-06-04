@@ -1,0 +1,24 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%! int count =100; %>
+
+<h1>bla <br>bla <br>bla</h1>
+
+<% out.println("Accessing The Count:" +count); %>
+
+<%int k=420;
+out.println("Accessing The k:" +k);
+%>
+
+<h1>bla <br>bla <br>bla</h1>
+
+<%out.println("Accessing The both:" +count+" "+k); %>
+</body>
+</html>
