@@ -1,0 +1,141 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+this is home jsp
+<form action="Controllerservlet" method="POST">
+Email: <input type="text" name="email">
+<br />
+Password: <input type="text" name="password" />
+<input type="submit" value="Submit" />
+</form>
+</body>
+</html>
+
+--------------------------------------------------------------------------------------------------------------------------
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class Controllerservlet
+ */
+@WebServlet("/Controllerservlet")
+public class Controllerservlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Controllerservlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+		String email=request.getParameter("email");  
+        String password=request.getParameter("password");
+        
+        Mypackage.ModelBean testobj = new Mypackage.ModelBean();
+        testobj.setEmail(email);
+        testobj.setPassword(password);
+        request.setAttribute("record",testobj);
+        RequestDispatcher rd=request.getRequestDispatcher("success.jsp");  
+        rd.forward(request, response); 
+	}
+
+}
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+package Mypackage;
+
+public class ModelBean 
+{
+		
+		private String email="null";
+		private String password="null";
+	
+		public String getEmail() 
+		{
+			return email;
+		}
+		public void setEmail(String email) 
+		{
+			this.email = email;
+		}
+		public String getPassword() 
+		{
+			return password;
+		}
+		public void setPassword(String password) 
+		{
+			this.password = password;
+		}
+		
+	 
+	 
+	}
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+This is jsp success
+Method1<br>
+<%  
+Mypackage.ModelBean object=(Mypackage.ModelBean)request.getAttribute("record");  
+out.print("Welcome, "+object.getEmail());  
+%>
+Method 2<br>
+<jsp:useBean id="object2" class="Mypackage.ModelBean" />
+DATA:
+<jsp:getProperty name="object2" property="email" />
+<jsp:getProperty name="object2" property="password" />
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
