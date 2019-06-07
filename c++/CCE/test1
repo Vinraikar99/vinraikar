@@ -1,0 +1,25 @@
+// Assume that integers take 4 bytes. 
+#include<iostream> 
+
+using namespace std; 
+
+class Test 
+{ 
+static int i;  // does not have any size when we calculate the size of class 
+int j; 
+}; 
+
+int Test::i; 
+
+void print()
+{
+	cout<< "hello ";
+}
+
+int main() 
+{ 
+	cout << sizeof(Test);   //size of class is displayed
+		print(); 
+	return 0;
+
+} 
