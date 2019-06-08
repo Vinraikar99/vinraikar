@@ -1,0 +1,23 @@
+#include<iostream> 
+using namespace std; 
+class P 
+{ 
+public: 
+	virtual void show() = 0; 
+}; 
+
+class Q : public P { 
+int x; 
+//public:
+//void show()
+//{
+//	cout<<"hello";
+//}
+}; 
+
+int main(void) 
+{ 
+	Q q; 
+	q.show();
+	return 0; 
+} 
