@@ -1,0 +1,31 @@
+#include<iostream> 
+
+using namespace std; 
+
+class myInteger 
+{ 
+private: 
+	int value; 
+public: 
+	myInteger(int v=0) // parametrized constructor 
+	{ 
+	value = v; 
+	
+	} 
+	void print()
+	{
+		cout<< value;
+	}
+	
+	//...other things in class 
+}; 
+
+int main() 
+{ 
+myInteger I1;
+I1=5;
+I1.print();
+ 
+getchar(); 
+return 0; 
+} 
