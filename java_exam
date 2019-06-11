@@ -1,0 +1,259 @@
+login.jsp
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<h1 align="center">Student Login</h1>
+
+<div align="center">
+		<form action="loginServlet" method="post">
+			Username: <input type="text" name="userName" />
+			<br/>Password: <input type="password" name="password" />
+			<br/><input type="submit" value="SUBMIT" name="login">
+		</form>
+	</div>
+	
+<a href="Register.jsp">New User Click here to Register</a>
+</body>
+</html>
+-----------------------------------------------------------------------------------------------------------------------------
+
+Register.jsp
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1 align="center">Student Registration</h1>
+
+ <div align="center">
+		<form action="RegisterServlet" method="post">
+			Username: <input type="text" name="userName" />
+			<br/>Password: <input type="password" name="password" />
+			<br/>Confirm Password: <input type="password" name="confirm_password" />
+			<br/>First Name: <input type="text" name="first_name" />
+			<br/>Last Name: <input type="text" name="last_name" />
+			<br/>Mobile : <input type="text" name="mobile" />
+			<br/>Email ID: <input type="text" name="email" />
+			<br/><input type="submit" value="Register" name="login">
+		</form>
+	</div>
+	
+	<a href="login.jsp">New User Click here to Login</a>
+</body>
+</html>
+
+--------------------------------------------------------------------------------------------------------
+RegisterBean.java
+
+package com.example;
+
+public class RegisterBean {
+	
+		 private String userName;
+		 private String password;
+		 
+		 
+		 public String getUserName() {
+			 return userName;
+			 }
+			 public void setUserName(String userName) {
+			 this.userName = userName;
+			 }
+			 public String getPassword() {
+			 return password;
+			 }
+			 public void setPassword(String password) {
+			 this.password = password;
+			 }
+
+}
+-------------------------------------------------------------------------------------------------
+
+RegisterServlet.java
+
+package com.example;
+
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.example.RegisterBean;
+import com.example.RegistrationDao;
+
+public class RegisterServlet extends HttpServlet {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public RegisterServlet() {
+	 }
+	 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		 //Copying all the input parameters in to local variables
+		 String userName = request.getParameter("username");
+		 String password = request.getParameter("password");
+		 
+		 RegisterBean registerBean = new RegisterBean();
+		 
+		 registerBean.setUserName(userName);
+		 registerBean.setPassword(password);
+		 
+		 RegistrationDao registerDao = new RegistrationDao();
+		 
+		 String userRegistered = registerDao.registerUser(registerBean);
+		 
+		 if(userRegistered.equals("SUCCESS"))   
+		 {
+		 request.getRequestDispatcher("/Success.jsp").forward(request, response);
+		 }
+		 else   //On Failure, display a meaningful message to the User.
+		 {
+		 request.setAttribute("errorMessage", userRegistered);
+		 request.getRequestDispatcher("/Register.jsp").forward(request, response);
+		 }
+		 }
+}
+
+---------------------------------------------------------------------------------------------------------------
+RegistrationDao.java
+
+
+package com.example;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import com.example.RegisterBean;
+import com.example.DBConnection;
+
+public class RegistrationDao {
+	
+	public String registerUser(RegisterBean registerBean)
+	 {
+		
+		String userName = registerBean.getUserName();
+		 String password = registerBean.getPassword();
+		 
+		 Connection con = null;
+		 PreparedStatement preparedStatement = null;
+		 
+		 try
+		 {
+		 con = DBConnection.createConnection();
+		 String query = "insert into student values(?,?)"; 
+		 preparedStatement = con.prepareStatement(query);
+		
+		 preparedStatement.setString(1, userName);
+		 preparedStatement.setString(2, password);
+		 
+		 int i= preparedStatement.executeUpdate();
+		 
+		 if (i!=0)  
+			 return "SUCCESS"; 
+			 }
+			 catch(SQLException e)
+			 {
+			 e.printStackTrace();
+			 }
+			 
+			 return "Oops.. Something went wrong there..!";  
+	
+	 }
+
+}
+-------------------------------------------------------------------------------------------------------------
+DBConnection.java
+
+
+package com.example;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class DBConnection {
+	
+	public static Connection createConnection()
+	{
+		 Connection con = null;
+		 String url = "jdbc:mysql://localhost:3306/vin"; 
+		 String username = "root"; 
+		 String password = "root"; 
+		 
+		 try 
+		 {
+		 try 
+		 {
+		 Class.forName("com.mysql.jdbc.Driver"); 
+		 } 
+		 catch (ClassNotFoundException e)
+		 {
+		 e.printStackTrace();
+		 }
+		 
+		 con = DriverManager.getConnection(url, username, password); 
+		 System.out.println("Printing connection object "+con);
+		 } 
+		 catch (Exception e) 
+		 {
+		 e.printStackTrace();
+		 }
+		 
+		 return con; 
+		 }
+
+}
+
+--------------------------------------------------------------------------------------------------------
+
+web.xml
+
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+ <display-name>RegistrationMVC</display-name>
+ <welcome-file-list>
+ <welcome-file>Register.jsp</welcome-file>
+ </welcome-file-list>
+ <servlet>
+ <description></description>
+ <display-name>RegisterServlet</display-name>
+ <servlet-name>RegisterServlet</servlet-name>
+ <servlet-class>com.example.RegisterServlet</servlet-class>
+ </servlet>
+ <servlet-mapping>
+ <servlet-name>RegisterServlet</servlet-name>
+ <url-pattern>/RegisterServlet</url-pattern>
+ </servlet-mapping>
+</web-app>
+
+---------------------------------------------------------------------------------------------------------------------------
+Success.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<center><h2>Home Page</h2></center>
+ <b>User Registration Successful</b>
+</body>
+</html>
