@@ -1,0 +1,740 @@
+ProductInfoTag.java
+
+
+package com.met.customtag;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.servlet.jsp.JspContext;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.tagext.JspFragment;
+import javax.servlet.jsp.tagext.SimpleTagSupport;
+
+import com.met.model.ProductBean;
+
+public class ProductInfoTag extends SimpleTagSupport{
+
+	@Override
+	public void doTag() throws JspException, IOException {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		JspContext jspContext = super.getJspContext(); // here object is created so response is set to it it is done at done
+		JspWriter out = jspContext.getOut();  //example uses getJspContext().getOut() to retrieve the JspWriter to write the response. (but here their we have not used)
+
+		JspFragment body = super.getJspBody();  // this is to use param function in jsp file by using data from beam file
+		
+
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");	 
+			con = DriverManager.getConnection("jdbc:oracle:thin:@//192.168.4.31:1521/orcl11g", "dinesh", "dinesh");
+			stmt = con.createStatement();
+			rs = stmt.executeQuery("select pno, price, stock from products"); //data achived is saved in rs 
+			
+			while(rs.next()){
+				
+				int pNo = rs.getInt("pno");
+				double price = rs.getDouble("price");
+				int stock = rs.getInt("stock");
+					
+				ProductBean productBean = new ProductBean(pNo, price, stock);  //here we have created an object and send to bean file
+				//out.write(productBean.toString());
+				
+				jspContext.setAttribute("product", productBean);  // all the data is saved in jspcontext and is used in jsp page by using param function 
+				
+				body.invoke(null);  // body is invoked to write param function
+			}
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			if(rs != null){
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if(stmt != null){
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+}
+---------------------------------------------------------------------------------------------------------------
+ProductBean.java
+
+
+package com.met.model;
+
+public class ProductBean {
+
+	private int pid;
+	private double price;
+	private int stock;
+	
+	// data is seted and geted by jsp file by using param function by calling the filed names
+	public ProductBean(int pid, double price, int stock) {
+		super();
+		this.pid = pid;
+		this.price = price;
+		this.stock = stock;
+	}
+	
+	public int getPid() {
+		return pid;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public int getStock() {
+		return stock;
+	}
+	public void setPid(int pid) {
+		this.pid = pid;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	@Override
+	public String toString() {
+		return "ProductBean [pid=" + pid + ", price=" + price + ", stock=" + stock + "]";
+	}
+}
+-------------------------------------------------------------------------------------------------------
+sales.tld
+
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+    version="2.0">
+<description>Custom Tag</description>
+<tlib-version>2.1</tlib-version>
+<short-name>mytags</short-name>
+<uri>https://sales.met.web</uri>
+<!--
+<tag>
+	<name></name>
+	<tag-class></tag-class>
+	<body-content></body-content>
+	<attribute>
+	<name></name>
+	<required></required>
+	</attribute>		
+</tag>
+-->
+
+<tag>
+	<name>getProducts</name>
+	<tag-class>com.met.customtag.ProductInfoTag</tag-class>
+	<body-content>scriptless</body-content>
+</tag>
+
+
+</taglib>
+
+---------------------------------------------------------------------------------------------------------------------
+index.jsp
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+
+<%@ taglib prefix="m" uri="https://sales.met.web"%>    
+    
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1 align="center">Available Products</h1>
+	<%-- <m:getProducts> <--this will direct print in line-->
+		
+	</m:getProducts> --%>
+	
+	<table align="center" border="1">
+		<tr>
+			<th>PNO</th>
+			<th>PRICE</th>
+			<th>STOCK</th>
+		</tr>
+		
+		<m:getProducts>     <--coustom tag-->
+			<tr>
+				<td>${product.pid }</td>    <-- here session is used . ejb field--> 
+				<td>${product.price }</td>
+				<td>${product.stock }</td>
+			</tr>
+		</m:getProducts>
+		
+	</table>
+	
+	<br/>
+	<br/>
+	
+	
+	<a href="login.jsp">Login</a>
+	
+	
+</body>
+</html>
+
+---------------------------------------------------------------------------------------------------------------------
+
+login.jsp
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h1 align="center">Login Screen</h1>	
+	<br/>
+	<br/>
+    <div align="center">
+		<form action="loginBean" method="post">                                                  //cookie is created in AuthenticationServlet
+			Username: <input type="text" name="userName" value="${cookie.userName.value }"/>    //here the username is used from the loginbean and used in here for creating the cookies 
+			<br/>Password: <input type="password" name="password" />
+			<br/><input type="submit" value="Login" name="login">
+		</form>
+	</div>
+
+</body>
+</html>
+
+---------------------------------------------------------------------------------------------------------------
+LoginBean.java
+
+package com.met.model;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+public class LoginBean {
+	
+	private String userName = null;
+	
+	public String getUserName() {
+		return userName;
+	}
+
+	public boolean authenticate(String userName, String password){
+		
+		boolean success = false;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		Context context = null;                       // this both are use form connection
+		DataSource dataSource = null;
+		
+		try {
+			/*Class.forName("oracle.jdbc.OracleDriver");	
+			con = DriverManager.getConnection("jdbc:oracle:thin:@//192.168.4.31:1521/orcl11g", "dinesh", "dinesh");*/     // normal method of connection
+			
+			
+			context = new InitialContext();
+			Context initCtx = (Context) context.lookup("java:/comp/env");
+			dataSource = (DataSource) initCtx.lookup("jdbc/MySalesDB");            //this is all for connection dynamically declared in context.xml
+			
+			con = dataSource.getConnection();
+			
+			//prepared statement user controller statement
+			pstmt = con.prepareStatement("select count(1) from customers where cust_id=? and pwd=?");   //the following example finds how many rows in the customers table have the value in the column:
+			                                                                                         //if it found count(1) will increase or decrease
+			pstmt.setString(1, userName);          //value 1 in cust id and 2 in pwd                                                     
+			pstmt.setString(2, password);
+			
+			rs = pstmt.executeQuery();   // result is stored in rs  1 or more
+			
+			if(rs.next()){                     // its compulsory to use .next for printing here 
+				int count = rs.getInt(1);      //assigned to count
+				
+				if(count > 0){                // checked here 
+					success = true;
+					this.userName = userName;      // seted above
+				}
+				
+			}
+			
+		}/* catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} */catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			if(rs != null){
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return success;
+		
+	}
+	
+}
+--------------------------------------------------------------------------------------------------------------------------
+
+context.xml
+
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- The contents of this file will be loaded for each web application -->
+<Context>
+
+    <!-- Default set of monitored resources -->
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+
+    <!-- Uncomment this to disable session persistence across Tomcat restarts -->
+    <!--
+    <Manager pathname="" />
+    -->
+
+    <!-- Uncomment this to enable Comet connection tacking (provides events
+         on session expiration as well as webapp lifecycle) -->
+    <!--
+    <Valve className="org.apache.catalina.valves.CometConnectionManagerValve" />
+    -->
+	
+	//this is used by context for connection in logibean page only this much code is used 
+	<Resource name="jdbc/MySalesDB" auth="Container" type="javax.sql.DataSource"
+               maxTotal="100" maxIdle="30" maxWaitMillis="10000"
+               username="dinesh" password="dinesh" driverClassName="oracle.jdbc.OracleDriver"   
+               url="jdbc:oracle:thin:@//192.168.4.31:1521/orcl11g"/>
+	
+	
+	</Context>
+  
+  ----------------------------------------------------------------------------------
+  
+  order.jsp
+  
+  <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="m" uri="https://sales.met.web"%> 
+
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+    
+<jsp:useBean id="loginBean" class="com.met.model.LoginBean" scope="session"></jsp:useBean>    
+<jsp:useBean id="orderBean" class="com.met.model.OrderBean">
+	<jsp:setProperty name="orderBean" property="*"></jsp:setProperty>                 //it is used to set the data in bean as below pno and quantity is set in bean
+</jsp:useBean>    
+  
+    
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Welcome ${login.userName}</h1>
+	
+	<form>
+		<input type="hidden" value="${login.userName}" name="userName"/>
+		<table>
+			<tr>
+				<td>Pno: </td>
+				<td>
+					<select name="pno">
+						<m:getProducts>
+							<option>${product.pid }</option>
+						</m:getProducts>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Quantity: </td>
+				<td> <input type="text" name="quantity" /> </td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input type="submit" value="Place Order" name="order">
+				</td>
+			</tr>
+		</table>
+	</form>
+	
+	
+	<c:if test="${param.order == 'Place Order'}">                
+		<p><b>Order Number: </b></p> ${orderBean.newOrderNo }    //order is get and printed here
+	</c:if>
+	
+	<a href="../logout">logout</a>
+	
+</body>
+</html>
+
+
+----------------------------------------------------------------------------------------------------------------------
+
+orderBean.java
+
+package com.met.model;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class OrderBean {
+
+	private String userName;
+	private int pno;
+	private int quantity;
+	
+	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public int getPno() {
+		return pno;
+	}
+	public void setPno(int pno) {
+		this.pno = pno;
+	}
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	
+	public int getNewOrderNo(){
+		
+		int orderNo = -1;
+		
+		Connection con = null;
+		Statement stmt = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			
+			Class.forName("oracle.jdbc.OracleDriver");	
+			con = DriverManager.getConnection("jdbc:oracle:thin:@//192.168.4.31:1521/orcl11g", "dinesh", "dinesh");
+			
+			con.setAutoCommit(false);  //auto commit is tured off
+			
+			stmt = con.createStatement();
+			
+			stmt.executeUpdate("update counters set cur_val=cur_val+1 where ctr_name='orders'");   // this is executed counter table is updated 
+			
+			rs = stmt.executeQuery("select 1000 + cur_val from counters where ctr_name='orders'");   // here the counter table is called and add 100 temporary
+			
+			rs.next();                                                                               //value is stored in rs
+			
+			orderNo = rs.getInt(1);                                                                   //stored in orderno and used down to add in order table 
+			
+			String insertQuery = "insert into orders values (?, ?, ?, ?, ?)";           
+			
+			pstmt = con.prepareStatement(insertQuery);                        // statement is prepared and line vise execution is done here
+			
+			pstmt.setInt(1, orderNo);
+			pstmt.setDate(2, new Date(System.currentTimeMillis()));
+			pstmt.setString(3, userName);
+			pstmt.setInt(4, pno);
+			pstmt.setInt(5, quantity);
+			
+			pstmt.executeUpdate();            //execute the statement                            
+			
+			con.commit();       // commit in datebase
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			if(con != null)
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		}finally{
+			if(rs != null){
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if(stmt != null){
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return orderNo;
+		
+	}
+	
+	
+	
+}
+
+-------------------------------------------------------------------------------------------------------------
+AuthenticationServlet.java
+
+
+package com.met.controller;
+
+import java.io.IOException;
+
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.met.model.LoginBean;
+
+//@WebServlet("/login")
+@WebServlet({"/login", "/logout"})
+public class AuthenticationServlet extends HttpServlet{
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		//getServletConfig().getInitParameter("");
+		//getServletContext().getInitParameter("companyEmailId");
+		
+		HttpSession session = req.getSession(false);
+		
+		if(session != null){
+			LoginBean loginBean = (LoginBean) session.getAttribute("login");  
+			
+			String userName = loginBean.getUserName();
+			
+			Cookie cookie = new Cookie("userName", userName);
+			cookie.setMaxAge(5*24*60*60);
+			
+			resp.addCookie(cookie);
+			
+			session.invalidate();
+		}
+		
+		//resp.sendRedirect("index.jsp");
+		
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("index.jsp");
+		requestDispatcher.forward(req, resp);
+		
+		
+	}
+	
+	
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		String userName = req.getParameter("userName");
+		String password = req.getParameter("password");
+		
+		LoginBean loginBean = new LoginBean();
+		boolean authenticate = loginBean.authenticate(userName, password);
+		
+		if(authenticate){
+			
+			HttpSession httpSession = req.getSession();
+			httpSession.setAttribute("login", loginBean);
+			
+			resp.sendRedirect("secure/orders.jsp");
+			
+		}else{
+			resp.sendRedirect("login.jsp");
+		}
+		
+	}
+	
+}
+-----------------------------------------------------------------------------------------------------------------
+AuthorizationFilter.java 
+
+
+package com.met.filter;
+
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.met.model.LoginBean;
+
+
+@WebFilter("/secure/*")
+//@WebFilter({"/secure/*", "/valid/*"})
+public class AuthorizationFilter implements Filter{
+
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain fc)
+			throws IOException, ServletException {
+		
+		HttpServletRequest request = (HttpServletRequest) req;
+		HttpServletResponse response = (HttpServletResponse) resp;
+	    //all is auto typed only this two line are  used	
+		//here the "login" can be wrote anything but LoginBean should be same and also (LoginBean)
+		HttpSession session = request.getSession();
+		LoginBean loginBean = (LoginBean) session.getAttribute("login");      //getting  session detail in loginbean object and checking its null or not
+		
+		if(loginBean == null){
+			response.sendRedirect("../login.jsp");  
+		}else{
+			fc.doFilter(request, response);                    
+		}
+		
+		
+		//post processing filter
+	}
+
+	@Override
+	public void init(FilterConfig arg0) throws ServletException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	
+}
+
