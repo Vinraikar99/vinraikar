@@ -1,0 +1,65 @@
+Oops known as object-oriented programming language system is the main feature of
+ C# which further support the major features of oops including:
+
+Abstraction
+Encapsulation
+Inheritance and
+Polymorphism
+
+Abstraction
+
+
+Abstraction is important because it can hide unnecessary details 
+from reference objects to names. It is also necessary for the 
+construction of programs. Instead of showing how an object is 
+represented or how it works, it focuses on what an object does. 
+Therefore, data abstraction is often used for managing large and complex programs.
+--------------------------------------------------------------------------------------------------------------
+Encapsulation
+
+
+This binds the member function and data member into a single class. This also allows for abstraction. 
+Within OOP, encapsulation can be achieved through creating classes. 
+Those classes then display public methods and properties.
+ Encapsulation is like an enclosing in a capsule, that is enclosing the related operation and data related to an object into that object.
+
+Encapsulation is just like your bag, in which you can keep your details. 
+It implies it is the property of encapsulating members and functions. 
+Encapsulation is a process to hide internal details to an object; in other words, it states the working of an object.
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+Inheritance
+
+Inheritance is a feature of object-oriented programming.
+It allows code reusability when a class includes property of another class it is known as inheritance.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+Polymorphism
+
+
+Polymorphism is a feature of object-oriented programming. 
+It allows you to invoke methods of a derived class through base class reference during runtime.
+ In polymorphism, we will declare methods with same name and different parameters in same class or methods with
+ same name and same parameters in different classes.
+
+Compile Time Polymorphism (Early Binding or Overloading or static binding)
+
+Compile time polymorphism means we will declare a method with same name and 
+different parameter/signature because of this we will perform
+different tasks with same method name in the same class is called compile time polymorphism.
+
+Runtime polymorphism (Late Binding or Overriding or dynamic binding)
+
+Runtime polymorphism means we will declare a method with same name and 
+same parameter/signature in the different class is called runtime polymorphism.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Modularity
+
+Broadly speaking, modularity is the degree to which a system's components may be separated and recombined, 
+often with the benefit of flexibility and variety in use.
+
