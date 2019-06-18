@@ -1,0 +1,323 @@
+The <!DOCTYPE html> declaration defines this document to be HTML5
+The <html> element is the root element of an HTML page
+The <head> element contains meta information about the document
+The <title> element specifies a title for the document
+The <body> element contains the visible page content
+HTML5	2014
+
+
+The <h1> element defines a large heading
+HTML headings are defined with the <h1> to <h6> tags.
+<h1> defines the most important heading. <h6> defines the least important heading: 
+<h1>This is heading 1</h1>
+<h2>This is heading 2</h2>
+<h3>This is heading 3</h3>
+
+paragraph
+---------------------------------------------------------------------------
+The <p> element defines a paragraph
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+
+<p>
+This paragraph
+contains a lot of lines
+in the source code,
+but the browser 
+ignores it.
+</p>
+
+<p>
+This paragraph
+contains         a lot of spaces
+in the source         code,
+but the        browser 
+ignores it.
+</p>
+
+<p>This is a paragraph.
+<p>This is another paragraph.
+
+<p>This is<br>a paragraph<br>with line breaks.</p>
+
+<p>
+  My Bonnie lies over the ocean.
+
+  My Bonnie lies over the sea.
+
+  My Bonnie lies over the ocean.
+
+  Oh, bring back my Bonnie to me.
+</p>
+
+
+<pre>
+  My Bonnie lies over the ocean.
+
+  My Bonnie lies over the sea.
+
+  My Bonnie lies over the ocean.
+
+  Oh, bring back my Bonnie to me.
+</pre>
+
+
+
+anchor tag
+----------------------------------------------------------------------------
+<a href="https://www.w3schools.com">This is a link</a>  
+
+
+picture
+----------------------------------------------
+<img src="pic_trulli.jpg" alt="Italian Trulli">
+<img src="url">
+The alt attribute provides an alternate text for an image, if the user for 
+some reason cannot view it (because of slow connection, an error in the src attribute, or if the user uses a screen reader).
+<img src="img_girl.jpg" alt="Girl in a jacket" style="width:500px;height:600px;">
+<img src="img_girl.jpg" alt="Girl in a jacket" width="500" height="600">
+
+<a href="default.asp">
+  <img src="smiley.gif" alt="HTML tutorial" style="width:42px;height:42px;border:0;">
+</a>
+
+<p><img src="smiley.gif" alt="Smiley face" style="float:right;width:42px;height:42px;">
+The image will float to the right of the text.</p>
+
+<p><img src="smiley.gif" alt="Smiley face" style="float:left;width:42px;height:42px;">
+The image will float to the left of the text.</p>
+
+<img src="workplace.jpg" alt="Workplace" usemap="#workmap">
+
+
+<map name="workmap">
+  <area shape="rect" coords="34,44,270,350" alt="Computer" href="computer.htm">
+  <area shape="rect" coords="290,172,333,250" alt="Phone" href="phone.htm">
+  <area shape="circle" coords="337,300,44" alt="Coffee" href="coffee.htm">
+</map>
+
+
+
+<body style="background-image:url('clouds.jpg');">
+<h2>Background Image</h2>
+</body>
+
+
+<body>
+<p style="background-image:url('clouds.jpg');">
+...
+</p>
+</body>
+
+<picture>
+  <source media="(min-width: 650px)" srcset="img_pink_flowers.jpg">
+  <source media="(min-width: 465px)" srcset="img_white_flower.jpg">
+  <img src="img_orange_flowers.jpg" alt="Flowers" style="width:auto;">
+</picture>
+
+
+Tables
+-------------------------------------------------------------------------------------------------
+
+<table style="width:100%"> ---->width can be altered
+  <tr>                                    -------->row
+    <th>Firstname</th>          --------> table header is defined as th
+    <th>Lastname</th>          
+    <th>Age</th>
+  </tr>
+  <tr>                                    ---------> table container defined as td
+    <td>Jill</td>
+    <td>Smith</td> 
+    <td>50</td>
+  </tr>
+  <tr>
+    <td>Eve</td>
+    <td>Jackson</td> 
+    <td>94</td>
+  </tr>
+</table>
+
+
+table, th, td {
+  border: 1px solid black;        ----> border for table with thickness
+}
+
+
+table, th, td {
+  border: 1px solid black;         
+  border-collapse: collapse;   -----> remove the thickness of table
+}
+
+th, td {
+  padding: 15px;   --------------> increase the size of table
+}
+
+
+th {                             --------> header alignment
+  text-align: left;
+}
+
+
+
+table {                        ---------------> thickness of border is increased
+  border-spacing: 5px;
+}
+
+
+table#t01 {               --------------> background colour
+  width: 100%; 
+  background-color: #f1f1c1;
+}
+
+
+table#t01 tr:nth-child(even) {
+  background-color: #eee;
+}
+table#t01 tr:nth-child(odd) {
+  background-color: #fff;
+}
+table#t01 th {
+  color: white;
+  background-color: black;
+}
+
+
+Chapter Summary
+Use the HTML <table> element to define a table
+Use the HTML <tr> element to define a table row
+Use the HTML <td> element to define a table data
+Use the HTML <th> element to define a table heading
+Use the HTML <caption> element to define a table caption
+Use the CSS border property to define a border
+Use the CSS border-collapse property to collapse cell borders
+Use the CSS padding property to add padding to cells
+Use the CSS text-align property to align cell text
+Use the CSS border-spacing property to set the spacing between cells
+Use the colspan attribute to make a cell span many columns
+Use the rowspan attribute to make a cell span many rows
+Use the id attribute to uniquely define one table
+
+
+
+List
+--------------------------------------------------------------------
+
+<ul>
+  <li>Coffee</li>
+  <li>Tea</li>
+  <li>Milk</li>
+</ul>
+
+<ol>
+  <li>Coffee</li>
+  <li>Tea</li>
+  <li>Milk</li>
+</ol>
+
+
+
+Forms
+--------------------------------------------------------------------------------
+<form>
+.
+form elements
+.
+</form>
+
+
+
+<input type="text">
+
+<input type="submit">
+
+<form action="/action_page.php">
+  First name:<br>
+  <input type="text" name="firstname" value="Mickey"><br>
+  Last name:<br>
+  <input type="text" name="lastname" value="Mouse"><br><br>
+  <input type="submit" value="Submit">
+</form>
+
+
+<form action="/action_page.php" target="_blank">
+
+
+<form action="/action_page.php" method="get">
+
+<form action="/action_page.php" method="post">
+
+
+<form action="/action_page.php">
+  <fieldset>
+    <legend>Personal information:</legend>
+    First name:<br>
+    <input type="text" name="firstname" value="Mickey"><br>
+    Last name:<br>
+    <input type="text" name="lastname" value="Mouse"><br><br>
+    <input type="submit" value="Submit">
+  </fieldset>
+</form>
+
+
+
+DROP-DOWN
+-----------------------------------------------------------------------------
+
+<select>
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
+</select>
+
+
+LIST BOX
+---------------------------------------------------------------------------
+<!DOCTYPE html>
+<html>
+<body>
+
+<form action="/action_page.php" method="get">
+  <input list="browsers" name="browser">
+  <datalist id="browsers">
+    <option value="Internet Explorer">
+    <option value="Firefox">
+    <option value="Chrome">
+    <option value="Opera">
+    <option value="Safari">
+  </datalist>
+  <input type="submit">
+</form>
+                                                     -----strong makes the word bold
+<p><strong>Note:</strong> The datalist tag is not supported in Internet Explorer 9 and earlier versions, or in Safari 12.0 and
+earlier versions.</p>
+
+</body>
+</html>
+
+
+Text AreA
+-------------------------------------------------------------------------------
+<textarea rows="4" cols="50">
+At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies. 
+</textarea>
+
+
+Radio Button
+-----------------------------------------------------------------------------------
+
+<form>
+  <input type="radio" name="gender" value="male" checked> Male<br>
+  <input type="radio" name="gender" value="female"> Female<br>
+  <input type="radio" name="gender" value="other"> Other
+</form>
+
+
+checkBOx
+---------------------------------------------------------------------------------------------
+<form action="/action_page.php">
+  <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
+  <input type="checkbox" name="vehicle2" value="Car"> I have a car<br>
+  <input type="checkbox" name="vehicle3" value="Boat" checked> I have a boat<br><br>
+  <input type="submit" value="Submit">
+</form>
