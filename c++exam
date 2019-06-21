@@ -1,10 +1,13 @@
-
+// it does not save the detail of user ,only saves the username and password bcoz it is saved in file ,so when
+//it check for login it check that txt file and get loged in their present the usernames and passwords of previous user
+//and balances show 0 bcoz it does not save that values
 #include <iostream>
 #include <fstream>
 #include <string>
 
 using namespace std;
 
+// write in text file ,it will auto create the file give any name of file , it will create new and write
 void createAccount(string name, string password) 
 {
    ofstream create;
@@ -14,22 +17,27 @@ void createAccount(string name, string password)
    create.close();
 }
 
+// checking of login
 bool login(string name, string password) {
-   ifstream log;
-   log.open("accounts.txt");
-   string n, p;
-   if (log.is_open()) {
-       while (log >> n) {
+   ifstream log;                                //file opening code  #object
+   log.open("accounts.txt");                    //file opened
+   string n, p;                            
+   if (log.is_open())                    // if file opened
+   {        
+       while (log >> n) 
+	   {
            log >> p;
-           if (name == n && password == p) {
+           if (name == n && password == p)        //checking
+		   {
                return true;
            }
        }
    }
-   log.close();
+   log.close();            //file close
    return false;
 }
 
+//deposite method
 void deposit(double &balance, double val)
  {
  
@@ -37,6 +45,7 @@ void deposit(double &balance, double val)
    
 }
 
+// withdraw method
 bool withdraw(double &balance, double val) 
 {
    if (balance >= val)
@@ -50,6 +59,7 @@ bool withdraw(double &balance, double val)
    }
 }
 
+//printing
 void displayBalance(double balance, double val) 
 {
    double temp1 = balance;
