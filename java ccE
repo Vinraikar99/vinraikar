@@ -1,0 +1,58 @@
+------------------------------------------------------JPA-----------------------------------------------------------
+
+private static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("jpaTest");
+
+EntityManager entityManager = null;
+EntityTransaction transaction = null;
+
+entityManager = entityManagerFactory.createEntityManager();
+transaction = entityManager.getTransaction();
+			
+Account account = new Account(150, "Ramesh", 150000);
+			
+transaction.begin();
+			
+entityManager.persist(account);
+			
+transaction.commit();
+
+
+
+-------------------------------------------------------Hibernite--------------------------------------------------
+
+private static SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+
+                        Session = sessionFactory.openSession();
+			tx = session.beginTransaction();
+			
+			//Account account = new Account(100, "Suresh", 12000);
+			
+			//session.persist(account);
+			
+			Account account = new Account("Ramesh", 14000);
+			Account account1 = new Account("Raj", 15000);
+			Account account2 = new Account("Vinod", 16000);
+			Account account3 = new Account("Mahesh", 17000);
+			
+			
+			session.save(account);
+			session.save(account1);
+			session.save(account2);
+			session.save(account3);
+			
+			tx.commit();
+
+
+
+---------------to get Data from Data Base
+Account account = session.get(Account.class, 1);
+			
+System.out.println(account)
+
+
+--------------create new object
+Account account = new Account("ABC", 5000);
+				
+				Account account1 = session.get(Account.class, 1);
+				
+				Account account2 = session.get(Account.class, 2);
