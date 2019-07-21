@@ -1,0 +1,104 @@
+homePage.jsp
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<style type="text/css">
+.body{
+background:url("http://cdn.illinois-liver.org/2019/01/14/wallpaper-car-background-hd-pulse-on-cars-image-for-mobile-grey.jpg") no-repeat fixed center; 
+}
+.h1{
+font-size:40px;
+text-align: center;
+color: black;
+font-style: oblique;
+}
+.p{
+font-size:20px;
+color: black;
+text-align: center;
+}
+.h2{
+color: grey;
+font-size:20px;
+text-align: center;
+}
+.form{
+font-size:25px;
+color: grey;
+text-align: center;
+}
+.a{
+color: grey;
+text-align: center;
+}
+</style>
+</head>
+<body class=body>
+<h1 class=h1>MY CARS<p class=p>*The Car Rental Service with self drive*</p></h1>
+<h2 class=h2>Login:-</h2>
+
+<form class=form action="/action_page.php">
+  <strong>User Name:</strong>
+  <input type="text" name="firstname" placeholder="Enter UserName" required>
+  <br>
+  <p></p>
+  <strong>Password:</strong>
+  <input type="password" name="lastname" placeholder="Enter PassWord" required> 
+  <br><br>
+  <input type="submit" value="Submit">
+  <a class=a href="registration.jsp">Register</a>
+</form>
+</body>
+</html>
+
+--------------------------------------------------------------------------------------------------------------
+registration.jsp
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<style type="text/css">
+.body{
+background:url("http://st.gde-fon.com/wallpapers_original/426727_Lexus_650_fon_avtomobili_mashiny_avto_2560x1600_www.Gde-Fon.com.jpg") no-repeat fixed center; 
+}
+.form{
+font-size:20px;
+color: black;
+text-align: center;
+}
+</style>
+</head>
+<body class=body>
+<form class=form action="homePage.jsp">
+<strong>SignUp!</strong>
+<br>
+<p>
+UserName:<input type="text"  placeholder="Enter Email" name="email" required>
+<br><p>
+PassWord:<input type="password" placeholder="Enter Password" name="password" required>
+<br><p>
+Repeat-PassWord:<input type="password" placeholder="Enter Password" name="repeatpassword" required>
+<br><p>
+Email:<input type="email" placeholder="Enter email" name="email" required>
+<br><p>
+Phone:<input type="number" placeholder="Enter phone" name="phone" required>
+<br><p>
+<input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
+<br><p>
+<input type="submit" value="submit">
+<a class=a href="homePage.jsp">Already an User!</a>
+</form>
+
+</form>
+</body>
+</html>
+
