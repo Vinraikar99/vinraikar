@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data.OracleClient;
+
+namespace DemoApp
+{
+    public partial class _Default : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+	  {  
+
+        string connetionString;
+		OracleConnection cnn;
+
+        connetionString = @"Data Source=MISUAT;User ID=staging_ed;Password=password;";
+
+        cnn = new OracleConnection(connetionString);
+
+        cnn.Open();
+
+		OracleCommand command;
+		OracleDataAdapter adapter = new OracleDataAdapter(); 
+		String sql="";
+		
+		sql = "Insert into CUSTOMERDEMO(CUSTOMERID,Name,COUNTRY) values (402,'WIN', 'IND')";
+		
+		command = new OracleCommand(sql,cnn);
+		adapter.InsertCommand = new OracleCommand(sql,cnn); 
+		adapter.InsertCommand.ExecuteNonQuery();
+
+		command.Dispose();
+		cnn.Close();
+				
+	  }
+            
+
+    }
+ }
+
