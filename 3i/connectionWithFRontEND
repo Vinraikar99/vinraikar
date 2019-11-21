@@ -1,0 +1,130 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data.OracleClient;
+
+namespace RegistrationDemo
+{
+    public partial class _Default : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            string connetionString;
+            OracleConnection cnn;
+
+            connetionString = @"Data Source=MISUAT;User ID=staging_ed;Password=password;";
+
+            cnn = new OracleConnection(connetionString);
+
+            cnn.Open();
+
+            OracleCommand command;
+            OracleDataAdapter adapter = new OracleDataAdapter();
+            String sql = "";
+
+            sql = "Insert into REGISTRATIONDEMO1(FULLNAME,USERNAME,PASSWORD,REPASSWORD,ADDRESS,AGE,GENDER) values ( '" + TxtName.Text + "',' " + TxtUserName.Text + " ' , ' " + TxtPassword.Text + " ' ,' " + TxtRePassword.Text + "','" + TxtAddress.Text + " ','" + TxtAge.Text +"','" + DropDownList1.SelectedValue +"')";
+
+            command = new OracleCommand(sql, cnn);
+       //    command.Parameters.Add(new OracleParameter("@FULLNAME", TxtName.Text));
+        //   command.Parameters.Add(new OracleParameter("@USERNAME", TxtUserName.Text));
+        //   command.Parameters.Add(new OracleParameter("@PASSWORD", TxtPassword.Text));
+       //    command.Parameters.Add(new OracleParameter("@REPASSWORD", TxtRePassword.Text));
+       //     command.Parameters.Add(new OracleParameter("@ADDRESS", TxtAddress.Text));
+        //    command.Parameters.Add(new OracleParameter("@AGE", Convert.ToInt32(TxtAge.Text)));
+        //   command.Parameters.Add(new OracleParameter("@GENDER", DropDownList1.SelectedValue));
+
+
+           adapter.InsertCommand = new OracleCommand(sql, cnn); 
+            adapter.InsertCommand.ExecuteNonQuery();
+
+            command.Dispose();
+            cnn.Close();
+        }
+    }
+}
+
+
+--------------------------------------------------------------------------------------------------------------------
+<%@ Page Title="Home Page" Language="C#"  AutoEventWireup="true"
+    CodeBehind="Default.aspx.cs" Inherits="RegistrationDemo._Default" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head id="Head1" runat="server">
+    <title>Sample Registration Page</title>
+    <style type="text/css">
+        .style1
+        {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <table class="">
+            <tr>
+                <td>Full Name:</td>
+                <td>
+                    <asp:TextBox ID="TxtName" runat="server"></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td>Username:</td>
+                <td>
+                    <asp:TextBox ID="TxtUserName" runat="server"></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td>
+                    <asp:TextBox ID="TxtPassword" runat="server"
+                                 TextMode="Password"></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td>Re Password:</td>
+                <td>
+                    <asp:TextBox ID="TxtRePassword" runat="server"
+                                 TextMode="Password"></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td>Address:</td>
+                <td>
+                    <asp:TextBox ID="TxtAddress" runat="server"></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td>Age:</td>
+                <td>
+                    <asp:TextBox ID="TxtAge" runat="server"></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td>Gender:</td>
+                <td>
+                <asp:DropDownList ID="DropDownList1" runat="server"
+                                  AppendDataBoundItems="true">
+                <asp:ListItem Value="-1">Select</asp:ListItem>
+                <asp:ListItem>Male</asp:ListItem>
+                <asp:ListItem>Female</asp:ListItem>
+                </asp:DropDownList>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <asp:Button ID="Button1" runat="server" Text="Save" 
+                             onclick="Button1_Click" />
+    </form>
+</body>
+</html>
+ 
