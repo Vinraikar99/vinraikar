@@ -1,0 +1,112 @@
+<%@ Page Title="Home Page" Language="C#"  AutoEventWireup="true"
+    CodeBehind="Default.aspx.cs" Inherits="CountryDropDownList._Default" %>
+
+<!DOCTYPE html>  
+  
+<html xmlns="http://www.w3.org/1999/xhtml">  
+<head id="Head1" runat="server">  
+    <title></title>  
+</head>  
+<body>  
+    <form id="form1" runat="server">  
+    <table>  
+            <tr>  
+                <th>Country</th>  
+                <th>:</th>  
+                <td>  
+                    <asp:DropDownList ID="ddlCountry" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlCountry_SelectedIndexChanged" >  
+                        <asp:ListItem>--Select--</asp:ListItem>  
+                        <asp:ListItem>India</asp:ListItem>  
+                        <asp:ListItem>USA</asp:ListItem>  
+                        <asp:ListItem>UK</asp:ListItem>  
+                         
+                    </asp:DropDownList>  
+                </td>  
+            </tr>  
+            <tr>  
+                <th>State</th>  
+                <th>:</th>  
+                <td>  
+                  <asp:DropDownList ID="ddlState" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlState_SelectedIndexChanged" />  
+                </td>  
+            </tr>  
+            <tr>  
+                <th>City</th>  
+                <th>:</th>  
+                <td>  
+                    <asp:DropDownList ID="ddlCity" runat="server"></asp:DropDownList>  
+                </td>  
+            </tr>  
+                </table>  
+    </form>  
+</body>  
+</html>  
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.OracleClient;
+
+namespace CountryDropDownList
+{
+    public partial class _Default : System.Web.UI.Page
+    {
+        String sqlCmd = "";
+        string connetionString;
+        OracleConnection cnn;
+        OracleCommand command;
+        OracleDataReader dr = null;  
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            connetionString = @"Data Source=MISUAT;User ID=staging_ed;Password=password;";
+            cnn = new OracleConnection(connetionString);
+        }
+
+         protected void ddlCountry_SelectedIndexChanged(object sender, EventArgs e)
+         {
+
+             sqlCmd = "select * from TBL_STATES where countryid=" + ddlCountry.SelectedIndex;
+
+              command = new OracleCommand(sqlCmd, cnn);
+
+              cnn.Open();
+             
+              dr = command.ExecuteReader();
+
+              ddlState.DataSource = dr;
+              ddlState.DataTextField = "state";
+              ddlState.DataValueField = "id";
+              ddlState.DataBind();
+              ddlState.Items.Insert(0, new ListItem("-Select-", "0"));
+
+       
+         }
+
+         protected void ddlState_SelectedIndexChanged(object sender, EventArgs e)
+         {
+
+             sqlCmd = "select * from tbl_city where stateid=" + ddlState.SelectedValue;
+             command  = new OracleCommand(sqlCmd, cnn);
+
+                 cnn.Open();
+
+             dr = command.ExecuteReader();
+
+             ddlCity.DataSource = dr;
+             ddlCity.DataTextField = "city";
+             ddlCity.DataBind();
+             ddlCity.Items.Insert(0, new ListItem("-Select-", "0"));
+
+         } 
+    }
+}
+
